@@ -14,7 +14,13 @@ describe 'df_elasticsearch::default' do
     end
 
     it 'converges successfully' do
-      chef_run # This should not raise an error
+      expect(chef_run).to install_apt_package('elasticsearch')
+  end
+  it 'creates the elasticsearch config' do 
+  	expect(chef_run).to create_template('/etc/elasticsearch/elasticsearch.yml')
     end
+  it 'restarts elasticsearch' do 
+  	expect(chef_run).to restart_service('elasticsearch')
+  end
   end
 end
